@@ -68,7 +68,7 @@ export default function QA() {
             onClick={() => submit(question)}
             disabled={loading || !question.trim()}
             style={{
-              background: loading || !question.trim() ? '#e2e8f0' : '#4f46e5',
+              background: loading || !question.trim() ? '#e2e8f0' : '#1a3254',
               border: 'none',
               borderRadius: '8px',
               padding: '10px 20px',
@@ -97,7 +97,7 @@ export default function QA() {
                 borderRadius: '20px',
                 padding: '3px 10px',
                 fontSize: '12px',
-                color: '#4f46e5',
+                color: '#1a3254',
                 cursor: 'pointer',
                 marginRight: '6px',
                 marginTop: '4px',
@@ -129,7 +129,7 @@ export default function QA() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {/* Answer */}
           <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '20px' }}>
-            <div style={{ fontSize: '12px', color: '#4f46e5', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px' }}>
+            <div style={{ fontSize: '12px', color: '#1a3254', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px' }}>
               Answer
             </div>
             <p style={{ fontSize: '15px', color: '#0f172a', lineHeight: '1.6' }}>{result.answer}</p>

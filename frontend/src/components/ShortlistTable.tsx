@@ -101,7 +101,7 @@ export default function ShortlistTable({ creators }: Props) {
                     </span>
                   )}
                 </td>
-                <td style={{ padding: '9px 16px', color: '#4f46e5', fontWeight: 600 }}>
+                <td style={{ padding: '9px 16px', color: '#1a3254', fontWeight: 600 }}>
                   <ScoreBar score={c.potential_score} />
                 </td>
                 <td style={{ padding: '9px 16px', color: '#059669' }}>
@@ -149,12 +149,12 @@ function FilterChip({ active, onClick, children }: { active: boolean; onClick: (
     <button
       onClick={onClick}
       style={{
-        background: active ? '#eef2ff' : '#ffffff',
-        border: `1px solid ${active ? '#4f46e5' : '#e2e8f0'}`,
+        background: active ? '#e8edf5' : '#ffffff',
+        border: `1px solid ${active ? '#1a3254' : '#e2e8f0'}`,
         borderRadius: '20px',
         padding: '3px 10px',
         fontSize: '11px',
-        color: active ? '#4f46e5' : '#64748b',
+        color: active ? '#1a3254' : '#64748b',
         cursor: 'pointer',
       }}
     >
@@ -167,7 +167,7 @@ function ScoreBar({ score }: { score: number }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
       <div style={{ width: '50px', height: '4px', background: '#e2e8f0', borderRadius: '2px', overflow: 'hidden' }}>
-        <div style={{ width: `${score}%`, height: '100%', background: '#4f46e5', borderRadius: '2px' }} />
+        <div style={{ width: `${score}%`, height: '100%', background: '#1a3254', borderRadius: '2px' }} />
       </div>
       <span style={{ fontSize: '12px' }}>{score.toFixed(0)}</span>
     </div>

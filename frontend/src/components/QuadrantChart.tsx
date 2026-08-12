@@ -16,7 +16,7 @@ interface Props {
 
 const QUADRANT_COLORS: Record<string, string> = {
   priority_partnerships: '#059669',
-  rising_talent: '#4f46e5',
+  rising_talent: '#1a3254',
   reach_without_traction: '#d97706',
   not_a_fit: '#94a3b8',
 };

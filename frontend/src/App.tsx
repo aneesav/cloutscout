@@ -18,9 +18,11 @@ export default function App() {
         gap: '32px',
         height: '56px',
       }}>
-        <span style={{ fontWeight: 700, fontSize: '18px', color: '#0f172a', letterSpacing: '-0.3px', marginRight: '16px' }}>
-          Clout Scout
-        </span>
+        <img
+          src="/logo.png"
+          alt="CloutScout"
+          style={{ height: '22px', marginRight: '16px', display: 'block' }}
+        />
         <NavButton active={page === 'dashboard'} onClick={() => setPage('dashboard')}>
           Dashboard
         </NavButton>
@@ -51,8 +53,8 @@ function NavButton({ active, onClick, children }: {
         padding: '6px 2px',
         fontSize: '14px',
         fontWeight: active ? 600 : 400,
-        color: active ? '#4f46e5' : '#64748b',
-        borderBottom: active ? '2px solid #4f46e5' : '2px solid transparent',
+        color: active ? '#1a3254' : '#64748b',
+        borderBottom: active ? '2px solid #1a3254' : '2px solid transparent',
         transition: 'color 0.15s, border-color 0.15s',
       }}
     >
