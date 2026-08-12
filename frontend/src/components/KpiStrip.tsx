@@ -8,12 +8,11 @@ export default function KpiStrip({ kpis }: Props) {
   const tiles = [
     { label: 'Creators Tracked', value: kpis.creators_tracked.toLocaleString() },
     { label: 'Videos Analyzed', value: kpis.videos_analyzed.toLocaleString() },
-    { label: 'Avg Engagement Rate', value: `${(kpis.aggregate_engagement_rate * 100).toFixed(2)}%` },
     { label: 'Verified Creators', value: `${(kpis.pct_verified * 100).toFixed(0)}%` },
   ];
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
       {tiles.map((t) => (
         <div
           key={t.label}
