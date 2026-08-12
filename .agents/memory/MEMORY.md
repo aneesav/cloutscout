@@ -1,0 +1,1 @@
+- [Deployment port mapping](deployment-port-mapping.md) — prod run command must bind the local port mapped to external 80 in .replit (8000 here), else health checks fail.
