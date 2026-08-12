@@ -19,7 +19,7 @@ export default function Callouts({ items }: Props) {
               padding: '10px 12px',
             }}
           >
-            <span style={{ fontSize: '13px', color: '#475569', lineHeight: '1.5' }}>{item}</span>
+            <CalloutText text={item} />
           </div>
         ))}
         {items.length === 0 && (
@@ -27,5 +27,20 @@ export default function Callouts({ items }: Props) {
         )}
       </div>
     </div>
+  );
+}
+
+function CalloutText({ text }: { text: string }) {
+  const idx = text.indexOf(': ');
+  if (idx === -1) {
+    return <span style={{ fontSize: '13px', color: '#475569', lineHeight: '1.5' }}>{text}</span>;
+  }
+  const label = text.slice(0, idx);
+  const rest = text.slice(idx + 2);
+  return (
+    <span style={{ fontSize: '13px', color: '#475569', lineHeight: '1.5' }}>
+      <span style={{ display: 'block', fontWeight: 700, color: '#1a3254', marginBottom: '2px' }}>{label}</span>
+      {rest}
+    </span>
   );
 }
