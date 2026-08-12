@@ -14,6 +14,6 @@ REACH_WEIGHT = 1 - ENGAGEMENT_WEIGHT
 # low_confidence rather than excluded — see docs/spec.md section 3.2.
 LOW_CONFIDENCE_PERCENTILE = 0.25
 
-DEFAULT_SHORTLIST_SIZE = 20
+DEFAULT_SHORTLIST_SIZE = 10
 
 CLAUDE_MODEL = "claude-opus-5"
