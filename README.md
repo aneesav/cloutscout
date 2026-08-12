@@ -24,6 +24,34 @@ data/             # source dataset
 tests/
 ```
 
+## Architecture
+
+```mermaid
+flowchart TD
+    CSV[("data/*.csv<br/>raw TikTok videos")] --> Load["data.py<br/>load_videos()"]
+    Load --> Metrics["metrics.py<br/>compute_creator_metrics()"]
+
+    subgraph DS["Data science: creator-level aggregation"]
+        Metrics --> Agg["Group by creator<br/>reach, engagement_rate, video_count"]
+        Agg --> Score["Potential Score<br/>65% engagement + 35% log(reach), normalized"]
+        Score --> Quad["Quadrant classification + low_confidence flag"]
+    end
+
+    Quad --> Dash["GET /api/dashboard<br/>KPIs, shortlist, quadrant chart, callouts"]
+    Quad --> Exec
+
+    subgraph QA["Q&A pipeline"]
+        Q["POST /api/qa<br/>{question}"] --> Parse["qa/claude.py: parse_question()<br/>NL -> StructuredQuery"]
+        Parse --> Exec["qa/executor.py: run_query()<br/>deterministic filter/sort, no LLM"]
+        Exec --> Narrate["qa/claude.py: narrate_result()<br/>result rows -> NL answer"]
+    end
+
+    Dash --> FE["Frontend (not in this repo)"]
+    Narrate --> FE
+```
+
+The Q&A pipeline's key design constraint: Claude only translates the question into a query and narrates the already-computed result — it never invents a number itself (`docs/spec.md` section 5.2).
+
 ## Running locally
 
 Requires [`uv`](https://docs.astral.sh/uv/).
