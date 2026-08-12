@@ -6,7 +6,7 @@ See [`docs/spec.md`](docs/spec.md) for the product spec and [`docs/model-scoring
 
 ## What's here
 
-This repo currently contains the **backend only**: a Python API that computes creator metrics from the dataset in `data/` and answers natural-language questions about them. There is no frontend yet; a third party UI is expected to consume this API. See "Handing off the frontend" below.
+This repo contains a Python API that computes creator metrics from the dataset in `data/` and answers natural-language questions about them, plus a Replit frontend that consumes that API.
 
 ```
 cloutscout/
@@ -14,11 +14,12 @@ cloutscout/
   data.py         # loads the raw video dataset
   metrics.py      # creator-level aggregation + Potential Score (docs/model-scoring.md)
   schemas.py      # API response models
-  api.py          # FastAPI app — the only entry point a frontend needs
+  api.py          # FastAPI app — the only entry point the frontend needs
   qa/
     schema.py     # the structured query the LLM is allowed to produce
     executor.py   # runs a structured query against real data (no LLM involved)
     claude.py     # NL -> query, and result -> NL narration, via Claude
+frontend/         # React + Vite UI, built and maintained by Replit
 docs/             # spec, data summary, scoring writeup
 data/             # source dataset
 tests/
@@ -41,16 +42,17 @@ flowchart TD
         Run --> Explain["Turn the result into<br/>a plain-English answer"]:::qa
     end
 
-    Dash --> FE["Frontend"]:::output
+    Dash --> FE["Frontend<br/>(built by Replit)"]:::fe
     Explain --> FE
 
     classDef data fill:#cbd5e1,stroke:#475569,color:#0f172a
     classDef ds fill:#bbf7d0,stroke:#15803d,color:#052e16
     classDef qa fill:#bfdbfe,stroke:#1d4ed8,color:#172554
     classDef output fill:#fde68a,stroke:#b45309,color:#451a03
+    classDef fe fill:#fecdd3,stroke:#be123c,color:#4c0519
 ```
 
-Green steps are the data science: rolling raw videos up into creator profiles and a potential score. Blue steps are where Claude interprets the question and explains the answer — but the actual lookup against real data (green, in the middle) is deterministic, so Claude never invents a number.
+Green steps are the data science: rolling raw videos up into creator profiles and a potential score. Blue steps are where Claude interprets the question and explains the answer — but the actual lookup against real data (green, in the middle) is deterministic, so Claude never invents a number. Pink is the frontend, architected separately by Replit and consuming this API.
 
 ## Running locally
 
@@ -89,8 +91,8 @@ curl -X POST http://127.0.0.1:8000/api/qa \
 
 ## Handing off the frontend
 
-The backend is intentionally decoupled from any UI or deployment config:
+The frontend in `frontend/` is built and architected by Replit; the backend here stays intentionally decoupled from it:
 
-- CORS is wide open (`app/api.py`) so a frontend on a different origin (e.g. a Replit-hosted app) can call it directly during development.
-- No Dockerfile, Procfile, or hosting config is included; a deliberate gap for frontend/deployment to fill in.
-- The API is the contract: point a frontend at `/api/dashboard` and `/api/qa` and everything in `docs/spec.md` sections 4 and 5 is available.
+- CORS is wide open (`cloutscout/api.py`) so the Replit-hosted frontend, running on a different origin, can call the API directly during development.
+- No Dockerfile, Procfile, or hosting config is included on the backend side; that's owned by Replit's deployment setup.
+- The API is the contract: the frontend consumes `/api/dashboard` and `/api/qa`, and everything it needs is documented in `docs/spec.md` sections 4 and 5.
