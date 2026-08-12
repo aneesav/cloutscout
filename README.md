@@ -1,4 +1,4 @@
-# cloutscout
+# CloutScout
 
 A package that helps agencies identify and shortlist promising creator talent for partner engagement.
 
@@ -23,6 +23,34 @@ docs/             # spec, data summary, scoring writeup
 data/             # source dataset
 tests/
 ```
+
+## Architecture
+
+```mermaid
+flowchart TD
+    Raw["Raw video-level data<br/>for every creator"]:::data --> Agg["Combine each creator's videos<br/>into one profile: total reach,<br/>engagement rate, video count"]:::ds
+    Agg --> Score["Score each creator's potential<br/>(blend of engagement and reach)"]:::ds
+    Score --> Class["Group creators into tiers<br/>and flag any low-confidence estimates"]:::ds
+
+    Class --> Dash["Dashboard: KPIs, ranked shortlist,<br/>chart, and highlights"]:::output
+    Class --> Run
+
+    subgraph QA["Answering a plain-English question"]
+        Ask["Someone asks a question"]:::qa --> Understand["Understand what's being asked"]:::qa
+        Understand --> Run["Check it against the real,<br/>already-computed data —<br/>answers are never invented"]:::ds
+        Run --> Explain["Turn the result into<br/>a plain-English answer"]:::qa
+    end
+
+    Dash --> FE["Frontend"]:::output
+    Explain --> FE
+
+    classDef data fill:#cbd5e1,stroke:#475569,color:#0f172a
+    classDef ds fill:#bbf7d0,stroke:#15803d,color:#052e16
+    classDef qa fill:#bfdbfe,stroke:#1d4ed8,color:#172554
+    classDef output fill:#fde68a,stroke:#b45309,color:#451a03
+```
+
+Green steps are the data science: rolling raw videos up into creator profiles and a potential score. Blue steps are where Claude interprets the question and explains the answer — but the actual lookup against real data (green, in the middle) is deterministic, so Claude never invents a number.
 
 ## Running locally
 
