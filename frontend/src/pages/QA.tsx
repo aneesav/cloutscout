@@ -39,9 +39,6 @@ export default function QA() {
         <h1 style={{ fontSize: '22px', fontWeight: 700, color: '#0f172a', marginBottom: '4px' }}>
           Ask a Question
         </h1>
-        <p style={{ fontSize: '13px', color: '#64748b' }}>
-          Plain-English Q&A grounded in the real dataset — the AI never invents numbers.
-        </p>
       </div>
 
       {/* Input */}
