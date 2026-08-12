@@ -18,11 +18,10 @@ export default function App() {
         gap: '32px',
         height: '56px',
       }}>
-        <img
-          src="/logo.png"
-          alt="CloutScout"
-          style={{ height: '22px', marginRight: '16px', display: 'block' }}
-        />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginRight: '16px' }}>
+          <img src="/icon.png" alt="" style={{ height: '30px', display: 'block' }} />
+          <img src="/logo.png" alt="CloutScout" style={{ height: '20px', display: 'block' }} />
+        </div>
         <NavButton active={page === 'dashboard'} onClick={() => setPage('dashboard')}>
           Dashboard
         </NavButton>
