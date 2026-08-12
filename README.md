@@ -1,4 +1,4 @@
-# cloutscout
+# CloutScout
 
 A package that helps agencies identify and shortlist promising creator talent for partner engagement.
 
@@ -28,29 +28,29 @@ tests/
 
 ```mermaid
 flowchart TD
-    CSV[("data/*.csv<br/>raw TikTok videos")] --> Load["data.py<br/>load_videos()"]
-    Load --> Metrics["metrics.py<br/>compute_creator_metrics()"]
+    Raw["Raw video-level data<br/>for every creator"]:::data --> Agg["Combine each creator's videos<br/>into one profile: total reach,<br/>engagement rate, video count"]:::ds
+    Agg --> Score["Score each creator's potential<br/>(blend of engagement and reach)"]:::ds
+    Score --> Class["Group creators into tiers<br/>and flag any low-confidence estimates"]:::ds
 
-    subgraph DS["Data science: creator-level aggregation"]
-        Metrics --> Agg["Group by creator<br/>reach, engagement_rate, video_count"]
-        Agg --> Score["Potential Score<br/>65% engagement + 35% log(reach), normalized"]
-        Score --> Quad["Quadrant classification + low_confidence flag"]
+    Class --> Dash["Dashboard: KPIs, ranked shortlist,<br/>chart, and highlights"]:::output
+    Class --> Run
+
+    subgraph QA["Answering a plain-English question"]
+        Ask["Someone asks a question"]:::qa --> Understand["Understand what's being asked"]:::qa
+        Understand --> Run["Check it against the real,<br/>already-computed data —<br/>answers are never invented"]:::ds
+        Run --> Explain["Turn the result into<br/>a plain-English answer"]:::qa
     end
 
-    Quad --> Dash["GET /api/dashboard<br/>KPIs, shortlist, quadrant chart, callouts"]
-    Quad --> Exec
+    Dash --> FE["Frontend"]:::output
+    Explain --> FE
 
-    subgraph QA["Q&A pipeline"]
-        Q["POST /api/qa<br/>{question}"] --> Parse["qa/claude.py: parse_question()<br/>NL -> StructuredQuery"]
-        Parse --> Exec["qa/executor.py: run_query()<br/>deterministic filter/sort, no LLM"]
-        Exec --> Narrate["qa/claude.py: narrate_result()<br/>result rows -> NL answer"]
-    end
-
-    Dash --> FE["Frontend (not in this repo)"]
-    Narrate --> FE
+    classDef data fill:#cbd5e1,stroke:#475569,color:#0f172a
+    classDef ds fill:#bbf7d0,stroke:#15803d,color:#052e16
+    classDef qa fill:#bfdbfe,stroke:#1d4ed8,color:#172554
+    classDef output fill:#fde68a,stroke:#b45309,color:#451a03
 ```
 
-The Q&A pipeline's key design constraint: Claude only translates the question into a query and narrates the already-computed result — it never invents a number itself (`docs/spec.md` section 5.2).
+Green steps are the data science: rolling raw videos up into creator profiles and a potential score. Blue steps are where Claude interprets the question and explains the answer — but the actual lookup against real data (green, in the middle) is deterministic, so Claude never invents a number.
 
 ## Running locally
 
