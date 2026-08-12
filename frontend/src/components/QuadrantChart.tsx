@@ -15,10 +15,10 @@ interface Props {
 }
 
 const QUADRANT_COLORS: Record<string, string> = {
-  priority_partnerships: '#34d399',
-  rising_talent: '#818cf8',
-  reach_without_traction: '#f59e0b',
-  not_a_fit: '#475569',
+  priority_partnerships: '#059669',
+  rising_talent: '#4f46e5',
+  reach_without_traction: '#d97706',
+  not_a_fit: '#94a3b8',
 };
 
 const QUADRANT_LABELS: Record<string, string> = {
@@ -49,12 +49,12 @@ export default function QuadrantChart({ points }: Props) {
     if (!active || !payload?.length) return null;
     const p = payload[0].payload;
     return (
-      <div style={{ background: '#1a1d2e', border: '1px solid #2d3150', borderRadius: '8px', padding: '10px 14px', fontSize: '12px' }}>
-        <div style={{ fontWeight: 600, color: '#e2e8f0', marginBottom: '4px' }}>@{p.author_name}</div>
-        <div style={{ color: '#94a3b8' }}>Engagement: {(p.engagement_rate * 100).toFixed(2)}%</div>
-        <div style={{ color: '#94a3b8' }}>Reach: {formatReach(p.reach)}</div>
-        <div style={{ color: '#94a3b8' }}>Videos: {p.video_count}</div>
-        <div style={{ marginTop: '4px', color: QUADRANT_COLORS[p.quadrant] ?? '#94a3b8' }}>
+      <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '10px 14px', fontSize: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}>
+        <div style={{ fontWeight: 600, color: '#0f172a', marginBottom: '4px' }}>@{p.author_name}</div>
+        <div style={{ color: '#64748b' }}>Engagement: {(p.engagement_rate * 100).toFixed(2)}%</div>
+        <div style={{ color: '#64748b' }}>Reach: {formatReach(p.reach)}</div>
+        <div style={{ color: '#64748b' }}>Videos: {p.video_count}</div>
+        <div style={{ marginTop: '4px', color: QUADRANT_COLORS[p.quadrant] ?? '#64748b' }}>
           {QUADRANT_LABELS[p.quadrant] ?? p.quadrant}
         </div>
       </div>
@@ -62,8 +62,8 @@ export default function QuadrantChart({ points }: Props) {
   }
 
   return (
-    <div style={{ background: '#1a1d2e', border: '1px solid #2d3150', borderRadius: '10px', padding: '16px' }}>
-      <div style={{ fontSize: '14px', fontWeight: 600, color: '#e2e8f0', marginBottom: '4px' }}>Creator Quadrant</div>
+    <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '16px' }}>
+      <div style={{ fontSize: '14px', fontWeight: 600, color: '#0f172a', marginBottom: '4px' }}>Creator Quadrant</div>
       <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '12px' }}>Engagement rate vs. reach (log scale)</div>
 
       {/* Legend */}
@@ -76,35 +76,35 @@ export default function QuadrantChart({ points }: Props) {
         ))}
       </div>
 
-      <ResponsiveContainer width="100%" height={260}>
+      <ResponsiveContainer width="100%" height={330}>
         <ScatterChart margin={{ top: 8, right: 8, bottom: 8, left: 0 }}>
           <XAxis
             dataKey="log_reach"
             type="number"
             name="Reach (log)"
             domain={['auto', 'auto']}
-            tick={{ fill: '#475569', fontSize: 11 }}
+            tick={{ fill: '#94a3b8', fontSize: 11 }}
             tickFormatter={(v) => formatReach(Math.pow(10, v))}
-            label={{ value: 'Reach →', position: 'insideBottom', offset: -4, fill: '#475569', fontSize: 11 }}
+            label={{ value: 'Reach →', position: 'insideBottom', offset: -4, fill: '#94a3b8', fontSize: 11 }}
           />
           <YAxis
             dataKey="er_pct"
             type="number"
             name="Engagement %"
             domain={['auto', 'auto']}
-            tick={{ fill: '#475569', fontSize: 11 }}
+            tick={{ fill: '#94a3b8', fontSize: 11 }}
             tickFormatter={(v) => `${v.toFixed(1)}%`}
             width={45}
           />
           <Tooltip content={renderTooltip as never} />
-          <ReferenceLine x={medLogReach} stroke="#2d3150" strokeDasharray="4 4" />
-          <ReferenceLine y={medEr} stroke="#2d3150" strokeDasharray="4 4" />
+          <ReferenceLine x={medLogReach} stroke="#e2e8f0" strokeDasharray="4 4" />
+          <ReferenceLine y={medEr} stroke="#e2e8f0" strokeDasharray="4 4" />
           <Scatter data={data} name="creators">
             {data.map((entry, i) => (
               <Cell
                 key={i}
                 fill={QUADRANT_COLORS[entry.quadrant] ?? '#94a3b8'}
-                fillOpacity={0.75}
+                fillOpacity={0.7}
                 r={Math.min(3 + entry.video_count * 0.8, 8)}
               />
             ))}
@@ -112,7 +112,7 @@ export default function QuadrantChart({ points }: Props) {
         </ScatterChart>
       </ResponsiveContainer>
 
-      <div style={{ fontSize: '11px', color: '#475569', marginTop: '4px' }}>
+      <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '4px' }}>
         Dot size = video count · Dashed lines = median
       </div>
     </div>

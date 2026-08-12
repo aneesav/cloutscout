@@ -36,7 +36,7 @@ export default function QA() {
   return (
     <div style={{ padding: '24px', maxWidth: '900px', margin: '0 auto' }}>
       <div style={{ marginBottom: '24px' }}>
-        <h1 style={{ fontSize: '22px', fontWeight: 700, color: '#e2e8f0', marginBottom: '4px' }}>
+        <h1 style={{ fontSize: '22px', fontWeight: 700, color: '#0f172a', marginBottom: '4px' }}>
           Ask a Question
         </h1>
         <p style={{ fontSize: '13px', color: '#64748b' }}>
@@ -45,7 +45,7 @@ export default function QA() {
       </div>
 
       {/* Input */}
-      <div style={{ background: '#1a1d2e', border: '1px solid #2d3150', borderRadius: '10px', padding: '16px', marginBottom: '20px' }}>
+      <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '16px', marginBottom: '20px' }}>
         <div style={{ display: 'flex', gap: '10px' }}>
           <input
             type="text"
@@ -55,12 +55,12 @@ export default function QA() {
             placeholder="e.g. Which creators get the most engagement?"
             style={{
               flex: 1,
-              background: '#0f1117',
-              border: '1px solid #2d3150',
+              background: '#f8fafc',
+              border: '1px solid #e2e8f0',
               borderRadius: '8px',
               padding: '10px 14px',
               fontSize: '14px',
-              color: '#e2e8f0',
+              color: '#0f172a',
               outline: 'none',
             }}
           />
@@ -68,40 +68,39 @@ export default function QA() {
             onClick={() => submit(question)}
             disabled={loading || !question.trim()}
             style={{
-              background: loading || !question.trim() ? '#374151' : '#4f46e5',
+              background: loading || !question.trim() ? '#e2e8f0' : '#4f46e5',
               border: 'none',
               borderRadius: '8px',
               padding: '10px 20px',
               fontSize: '14px',
               fontWeight: 600,
-              color: loading || !question.trim() ? '#6b7280' : '#fff',
+              color: loading || !question.trim() ? '#94a3b8' : '#fff',
               cursor: loading || !question.trim() ? 'not-allowed' : 'pointer',
               transition: 'background 0.15s',
               whiteSpace: 'nowrap',
             }}
           >
-            {loading ? 'Thinking…' : 'Ask →'}
+            {loading ? 'Thinking…' : 'Ask'}
           </button>
         </div>
 
         {/* Example questions */}
         <div style={{ marginTop: '12px' }}>
-          <span style={{ fontSize: '12px', color: '#475569', marginRight: '8px' }}>Try:</span>
+          <span style={{ fontSize: '12px', color: '#94a3b8', marginRight: '8px' }}>Try:</span>
           {EXAMPLE_QUESTIONS.map((q) => (
             <button
               key={q}
               onClick={() => submit(q)}
               style={{
-                background: 'none',
-                border: '1px solid #2d3150',
+                background: '#ffffff',
+                border: '1px solid #e2e8f0',
                 borderRadius: '20px',
                 padding: '3px 10px',
                 fontSize: '12px',
-                color: '#818cf8',
+                color: '#4f46e5',
                 cursor: 'pointer',
                 marginRight: '6px',
                 marginTop: '4px',
-                transition: 'background 0.1s',
               }}
             >
               {q}
@@ -112,15 +111,15 @@ export default function QA() {
 
       {/* Error */}
       {error && (
-        <div style={{ background: '#1e1b2e', border: '1px solid #7f1d1d', borderRadius: '10px', padding: '16px', marginBottom: '20px' }}>
-          <div style={{ color: '#f87171', fontWeight: 600, marginBottom: '4px' }}>Error</div>
-          <div style={{ color: '#94a3b8', fontSize: '13px' }}>{error}</div>
+        <div style={{ background: '#ffffff', border: '1px solid #fecaca', borderRadius: '10px', padding: '16px', marginBottom: '20px' }}>
+          <div style={{ color: '#dc2626', fontWeight: 600, marginBottom: '4px' }}>Error</div>
+          <div style={{ color: '#64748b', fontSize: '13px' }}>{error}</div>
         </div>
       )}
 
       {/* Loading */}
       {loading && (
-        <div style={{ textAlign: 'center', padding: '40px', color: '#64748b', fontSize: '14px' }}>
+        <div style={{ textAlign: 'center', padding: '40px', color: '#94a3b8', fontSize: '14px' }}>
           Consulting the data…
         </div>
       )}
@@ -129,30 +128,30 @@ export default function QA() {
       {result && !loading && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {/* Answer */}
-          <div style={{ background: '#1a1d2e', border: '1px solid #2d3150', borderRadius: '10px', padding: '20px' }}>
+          <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '20px' }}>
             <div style={{ fontSize: '12px', color: '#4f46e5', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px' }}>
               Answer
             </div>
-            <p style={{ fontSize: '15px', color: '#e2e8f0', lineHeight: '1.6' }}>{result.answer}</p>
+            <p style={{ fontSize: '15px', color: '#0f172a', lineHeight: '1.6' }}>{result.answer}</p>
             {result.low_confidence_note && (
-              <div style={{ marginTop: '12px', background: '#1e1b2e', border: '1px solid #4c1d95', borderRadius: '6px', padding: '8px 12px', fontSize: '12px', color: '#a78bfa' }}>
-                ⚠️ One or more creators in this result have a small sample size — treat with caution.
+              <div style={{ marginTop: '12px', background: '#fffbeb', border: '1px solid #fde68a', borderRadius: '6px', padding: '8px 12px', fontSize: '12px', color: '#b45309' }}>
+                Note: one or more creators in this result have a small sample size — treat with caution.
               </div>
             )}
           </div>
 
           {/* Supporting table */}
           {result.table.length > 0 && (
-            <div style={{ background: '#1a1d2e', border: '1px solid #2d3150', borderRadius: '10px', overflow: 'hidden' }}>
-              <div style={{ padding: '14px 20px', borderBottom: '1px solid #2d3150', fontSize: '12px', color: '#64748b', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '10px', overflow: 'hidden' }}>
+              <div style={{ padding: '14px 20px', borderBottom: '1px solid #e2e8f0', fontSize: '12px', color: '#64748b', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                 Supporting Data
               </div>
               <div style={{ overflowX: 'auto' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
                   <thead>
-                    <tr style={{ background: '#151824' }}>
+                    <tr style={{ background: '#f8fafc' }}>
                       {Object.keys(result.table[0]).map((col) => (
-                        <th key={col} style={{ padding: '10px 16px', textAlign: 'left', color: '#64748b', fontWeight: 600, borderBottom: '1px solid #2d3150', whiteSpace: 'nowrap' }}>
+                        <th key={col} style={{ padding: '10px 16px', textAlign: 'left', color: '#64748b', fontWeight: 600, borderBottom: '1px solid #e2e8f0', whiteSpace: 'nowrap' }}>
                           {formatColName(col)}
                         </th>
                       ))}
@@ -160,9 +159,9 @@ export default function QA() {
                   </thead>
                   <tbody>
                     {result.table.map((row, i) => (
-                      <tr key={i} style={{ borderBottom: '1px solid #1e2235' }}>
+                      <tr key={i} style={{ borderBottom: '1px solid #f1f5f9' }}>
                         {Object.entries(row).map(([col, val]) => (
-                          <td key={col} style={{ padding: '10px 16px', color: '#cbd5e1' }}>
+                          <td key={col} style={{ padding: '10px 16px', color: '#334155' }}>
                             {formatCell(col, val)}
                           </td>
                         ))}
@@ -185,7 +184,7 @@ function formatColName(col: string) {
 
 function formatCell(col: string, val: unknown): string {
   if (val === null || val === undefined) return '—';
-  if (typeof val === 'boolean') return val ? '✓' : '✗';
+  if (typeof val === 'boolean') return val ? 'Yes' : 'No';
   if (col === 'engagement_rate' && typeof val === 'number') return `${(val * 100).toFixed(2)}%`;
   if (col === 'potential_score' && typeof val === 'number') return val.toFixed(1);
   if (col === 'reach' && typeof val === 'number') return formatReach(val);
