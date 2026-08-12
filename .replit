@@ -53,3 +53,8 @@ externalPort = 5000
 [[ports]]
 localPort = 8000
 externalPort = 80
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["uv", "run", "uvicorn", "cloutscout.api:app", "--host", "0.0.0.0", "--port", "5000"]
+build = ["bash", "-c", "cd frontend && npm ci && npm run build"]

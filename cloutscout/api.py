@@ -9,9 +9,12 @@ deployment config — see README.md for how a frontend (e.g. built on Replit)
 is expected to consume it.
 """
 
+from pathlib import Path
+
 import anthropic
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from cloutscout.config import DEFAULT_SHORTLIST_SIZE
 from cloutscout.data import load_videos
@@ -112,3 +115,11 @@ def ask_question(request: QARequest) -> QAResponse:
         table=result_rows,
         low_confidence_note=bool(result["low_confidence"].any()) if not result.empty else False,
     )
+
+
+# In production the built frontend (frontend/dist) is served by this same app,
+# so a single process handles both the API and the UI. In development the Vite
+# dev server serves the frontend and proxies /api/* here, and dist/ may not exist.
+_frontend_dist = Path(__file__).resolve().parent.parent / "frontend" / "dist"
+if _frontend_dist.is_dir():
+    app.mount("/", StaticFiles(directory=_frontend_dist, html=True), name="frontend")
