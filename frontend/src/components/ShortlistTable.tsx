@@ -37,7 +37,7 @@ export default function ShortlistTable({ creators }: Props) {
     });
 
   const SortIcon = ({ k }: { k: SortKey }) =>
-    sortKey === k ? (sortDir === 'desc' ? ' ↓' : ' ↑') : ' ·';
+    sortKey === k ? (sortDir === 'desc' ? ' ↓' : ' ↑') : '';
 
   return (
     <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '10px', overflow: 'hidden' }}>
